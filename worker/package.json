@@ -1,0 +1,17 @@
+{
+  "name": "worker",
+  "version": "0.0.1",
+  "description": "A fibonacci calculator",
+  "main": "index.js",
+  "author": "tlenexkoyotl",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "nodemon": "1.18.3",
+    "redis": "2.8.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon"
+  }
+}

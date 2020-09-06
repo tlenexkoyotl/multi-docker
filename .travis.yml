@@ -1,0 +1,24 @@
+language: generic
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t tlenexkoyotl/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true tlenexkoyotl/react-test npm test
+
+after_success:
+  - docker build -t tlenexkoyotl/multi-client ./client
+  - docker build -t tlenexkoyotl/multi-nginx ./nginx
+  - docker build -t tlenexkoyotl/multi-server ./server
+  - docker build -t tlenexkoyotl/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push tlenexkoyotl/multi-client
+  - docker push tlenexkoyotl/multi-nginx
+  - docker push tlenexkoyotl/multi-server
+  - docker push tlenexkoyotl/multi-worker
